@@ -1,0 +1,25 @@
+## .NET
+bin/
+obj/
+artifacts/
+*.user
+*.suo
+.vs/
+*.userosscache
+*.sln.docstates
+
+## Rider
+.idea/
+
+## Test results
+TestResults/
+coverage/
+
+## Captures (large pcaps stay local, not in git)
+captures/*.pcap
+captures/*.pcapng
+captures/*.zip
+
+## OS
+Thumbs.db
+.DS_Store

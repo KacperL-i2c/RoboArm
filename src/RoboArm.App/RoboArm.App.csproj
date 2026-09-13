@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RoboArm.Core\RoboArm.Core.csproj" />
+    <ProjectReference Include="..\RoboArm.Runtime\RoboArm.Runtime.csproj" />
+    <ProjectReference Include="..\RoboArm.Server\RoboArm.Server.csproj" />
+    <ProjectReference Include="..\RoboArm.Simulator\RoboArm.Simulator.csproj" />
+    <ProjectReference Include="..\RoboArm.RoboScript\RoboArm.RoboScript.csproj" />
+  </ItemGroup>
+</Project>

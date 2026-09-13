@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\RoboArm.Core\RoboArm.Core.csproj" />
+    <ProjectReference Include="..\RoboArm.Protocol\RoboArm.Protocol.csproj" />
+  </ItemGroup>
+</Project>

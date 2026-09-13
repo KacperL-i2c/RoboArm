@@ -1,0 +1,19 @@
+; program v1
+; Canonical pick-and-place — the industrial-standard P1..P5 scenario (docs/08).
+; G5/G6 acceptance test: teach these poses, dry-run, run on the arm.
+
+speed 60%
+
+pose "safe"            ; P1 — safely above workspace
+pose "above_bin_a"     ; P2
+pose "in_bin_a"        ; P3
+gripper open
+pose "above_bin_a"
+pose "in_bin_a"
+gripper close wait=200ms
+pose "above_bin_a"     ; lift
+pose "above_bin_b"     ; P4
+pose "in_bin_b"        ; P5
+gripper open wait=200ms
+pose "above_bin_b"
+pose "safe"            ; finish
