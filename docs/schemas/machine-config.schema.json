@@ -1,0 +1,142 @@
+{
+  "title": "MachineConfig",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "axes": {
+      "type": "array",
+      "items": {
+        "title": "axisConfig",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "stepsPerDegree": {
+            "type": "number"
+          },
+          "maxVelocityDegS": {
+            "type": "number"
+          },
+          "maxAccelDegS2": {
+            "type": "number"
+          },
+          "softLimitMinDeg": {
+            "type": "number"
+          },
+          "softLimitMaxDeg": {
+            "type": "number"
+          },
+          "invertDirection": {
+            "type": "boolean"
+          },
+          "enableActiveLow": {
+            "type": "boolean"
+          },
+          "homing": {
+            "title": "homingConfig",
+            "type": "object",
+            "properties": {
+              "seekSpeedDegS": {
+                "type": "number"
+              },
+              "creepSpeedDegS": {
+                "type": "number"
+              },
+              "seekPositive": {
+                "type": "boolean"
+              },
+              "backoffDeg": {
+                "type": "number"
+              },
+              "limitSwitchInput": {
+                "type": "integer"
+              }
+            },
+            "required": []
+          },
+          "isValid": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      }
+    },
+    "safety": {
+      "title": "safetyConfig",
+      "type": "object",
+      "properties": {
+        "streamWatchdogTimeoutMs": {
+          "type": "integer"
+        },
+        "motionLoopHeartbeatTimeoutMs": {
+          "type": "integer"
+        },
+        "softStopMaxMs": {
+          "type": "integer"
+        },
+        "killMaxMs": {
+          "type": "integer"
+        },
+        "aiSessionSpeedCapPercent": {
+          "type": "integer"
+        },
+        "jogRequiresEnablingSwitch": {
+          "type": "boolean"
+        },
+        "positionDivergenceThresholdDeg": {
+          "type": "number"
+        }
+      },
+      "required": []
+    },
+    "apiPort": {
+      "type": "integer"
+    },
+    "configVersion": {
+      "type": "string"
+    },
+    "safetyOrDefault": {
+      "title": "safetyConfig",
+      "type": "object",
+      "properties": {
+        "streamWatchdogTimeoutMs": {
+          "type": "integer"
+        },
+        "motionLoopHeartbeatTimeoutMs": {
+          "type": "integer"
+        },
+        "softStopMaxMs": {
+          "type": "integer"
+        },
+        "killMaxMs": {
+          "type": "integer"
+        },
+        "aiSessionSpeedCapPercent": {
+          "type": "integer"
+        },
+        "jogRequiresEnablingSwitch": {
+          "type": "boolean"
+        },
+        "positionDivergenceThresholdDeg": {
+          "type": "number"
+        }
+      },
+      "required": []
+    }
+  },
+  "required": [
+    "name",
+    "axes",
+    "configVersion"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -9,9 +9,11 @@ Author works in Polish sometimes; code and docs are English.
 ## Commands
 
 - Build: `dotnet build RoboArm.sln`
-- Run console tool: `dotnet run --project tools/ReWorkbench`
+- Run console tool: `dotnet run --project tools/ReWorkbench` (`sim` = G1 demo, `schemas`, `board`)
 - Run app (Windows only): `dotnet run --project src/RoboArm.App`
-- Test: `dotnet test` (no test project yet — create `tests/RoboArm.Tests` when starting M1)
+- Test: `dotnet test` — tests live in `tests/RoboArm.Tests` (xUnit + FsCheck). Targets
+  net8.0 with `RollForward: Major` (Directory.Build.props), so machines with only a
+  newer runtime work without extra env vars.
 
 ## Hard rules (do not violate)
 
@@ -30,10 +32,25 @@ Author works in Polish sometimes; code and docs are English.
 
 ## Current status & next actions
 
-- Phase 0 (hardware capture) not started. Code is scaffolding only.
-- Next coding tasks (when user says go): M1 items from `docs/05-roadmap.md` — config store,
-  simulator, planner, property tests; all runnable without hardware.
-- Hardware tasks need the user physically present (bench work per `docs/01-hardware.md`).
+- M1 + M2 complete (S8–S20): contracts/config store, simulator, planner, execution
+  engine (FSM, Guard, watchdogs, stop semantics, divergence tracking, pause/resume,
+  audit JSONL). Gates G1 and G2 passed in the Simulator — see docs/SAFETY-LOG.md.
+- WPF shell MVP (S25–S27): MachineSession composition root (Runtime owns the target;
+  App talks to Runtime only), JogController over the full safety path, safe-close,
+  single instance, sleep prevention. Live schematic 3D visualizer (pure WPF 3D,
+  dockable/detachable, placeholder geometry until Phase 0). Manual walkthrough:
+  docs/UI-CHECKLIST.md.
+- Phase 0 (hardware capture) not started. USB plumbing is ready: serial transport
+  (CH340 discovery, ring log), NmotionMotionTarget skeleton (port opens, RX logged,
+  NO bytes are transmitted until the protocol is decoded — pre-G0 safety rule),
+  MachineSession.CreateUsb, app `--usb` flag, and ReWorkbench capture-analysis
+  commands (pcapng scan/stream/cadence/diff, tested on synthetic fixtures).
+  Bench runbook: docs/02-capture-runbook.md. Next coding milestone needs the
+  captures: decode → docs/PROTOCOL.md → codec → replay → G0 (M3/S21+ per
+  docs/05-roadmap.md). Hardware tasks need the user physically present.
+- **If you are the assistant on the Mach3 PC**: read `docs/HANDOFF.md` first —
+  today's job is guiding the user through the Phase-0 capture session and
+  analyzing the resulting pcapng corpus.
 
 ## Testing philosophy
 

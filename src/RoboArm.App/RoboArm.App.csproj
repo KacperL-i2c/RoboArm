@@ -4,12 +4,12 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <!-- WPF bindings with StringFormat need real culture data; ICU is always present on Windows. -->
+    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\RoboArm.Core\RoboArm.Core.csproj" />
     <ProjectReference Include="..\RoboArm.Runtime\RoboArm.Runtime.csproj" />
     <ProjectReference Include="..\RoboArm.Server\RoboArm.Server.csproj" />
-    <ProjectReference Include="..\RoboArm.Simulator\RoboArm.Simulator.csproj" />
-    <ProjectReference Include="..\RoboArm.RoboScript\RoboArm.RoboScript.csproj" />
   </ItemGroup>
 </Project>

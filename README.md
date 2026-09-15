@@ -6,8 +6,9 @@ Windows control software (C# / .NET 8 / WPF) for a stepper-motor robotic arm dri
 Goal: independently control any axis with any settings, program multi-move sequences visually,
 and let external AI agents drive the arm safely through a local API.
 
-**Status: Phase 0 (protocol capture) not yet started.** The repo currently contains the
-solution skeleton + full project documentation. Read `docs/05-roadmap.md` first.
+**Status: M1 + M2 complete (S8–S20, gates G1 & G2 passed in the Simulator); WPF shell MVP
+(S25–S27) running against the Simulator.** Phase 0 (protocol capture on hardware) not yet
+started. Read `docs/05-roadmap.md`, `docs/SAFETY-LOG.md`, and `docs/UI-CHECKLIST.md`.
 
 ## Repository layout
 
@@ -31,8 +32,19 @@ captures/            USB capture corpus (pcaps stay out of git)
 
 1. Install the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
 2. `dotnet build RoboArm.sln`
-3. `dotnet run --project tools/ReWorkbench` — Phase-0 tooling entry point.
-4. `dotnet run --project src/RoboArm.App` — WPF app (currently a placeholder).
+3. `dotnet test` — 100+ unit/property/fuzz tests (no hardware needed). Targets net8.0
+   with `RollForward: Major`, so it also runs where only a newer runtime is installed.
+4. `dotnet run --project tools/ReWorkbench -- sim` — G1 gate: 3-move program in the Simulator.
+5. `dotnet run --project tools/ReWorkbench -- schemas` — export JSON schemas to `docs/schemas/`.
+6. `dotnet run --project tools/ReWorkbench -- usb list` — find the CH340 (nMotion) board COM port.
+7. `dotnet run --project tools/ReWorkbench -- capture scan|stream|cadence|diff <file.pcapng>` —
+   Phase-0 USBPcap analysis (see docs/02-capture-runbook.md).
+8. `dotnet run --project src/RoboArm.App` — WPF dashboard: connect/enable, axis cards,
+   hold-to-jog, clamped target sliders, F12 E-stop, and a live schematic 3D view
+   (dockable or floating window) — walkthrough: `docs/UI-CHECKLIST.md`.
+   Add `--usb` to attach the real board instead of the simulator (pre-G0 skeleton:
+   the port opens and traffic is logged, but the board cannot move until the protocol
+   is decoded — docs/02).
 
 ## Documentation index
 

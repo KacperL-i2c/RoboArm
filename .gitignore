@@ -20,6 +20,9 @@ captures/*.pcap
 captures/*.pcapng
 captures/*.zip
 
+## Local runtime data (configs/audit generated at the bench stay out of git)
+data/
+
 ## OS
 Thumbs.db
 .DS_Store

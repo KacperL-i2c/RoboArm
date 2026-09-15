@@ -6,5 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- Machine may only have a newer runtime installed (e.g. .NET 10 with net8.0
+         targets); allow apps to roll forward instead of failing to launch. -->
+    <RollForward>Major</RollForward>
   </PropertyGroup>
 </Project>

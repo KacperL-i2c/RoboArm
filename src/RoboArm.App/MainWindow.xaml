@@ -1,10 +1,97 @@
 <Window x:Class="RoboArm.App.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="RoboArm Studio" Height="720" Width="1280"
-        WindowStartupLocation="CenterScreen">
-    <Grid>
-        <TextBlock Text="RoboArm Studio — see docs/05-roadmap.md for next steps"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-    </Grid>
+        xmlns:views="clr-namespace:RoboArm.App.Views"
+        Title="RoboArm Studio — Simulator"
+        Height="760" Width="1280" MinWidth="720" MinHeight="480"
+        WindowStartupLocation="CenterScreen"
+        Closing="OnClosing">
+    <Window.InputBindings>
+        <KeyBinding Key="F12" Command="{Binding EStopCommand}"/>
+        <KeyBinding Key="Esc" Command="{Binding StopCommand}"/>
+    </Window.InputBindings>
+    <DockPanel>
+        <!-- Top bar: state, connection, speed, stop, E-stop (always visible) -->
+        <Border DockPanel.Dock="Top" Background="#222" Padding="10,6">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse Width="16" Height="16" Fill="{Binding StateBrush}" Margin="0,0,8,0"/>
+                    <TextBlock Text="{Binding State}" Foreground="White" FontWeight="Bold"
+                               FontSize="14" VerticalAlignment="Center" MinWidth="90"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="16,0">
+                    <Button Content="Connect" Command="{Binding ConnectCommand}" Margin="0,0,6,0" Padding="10,4"/>
+                    <Button Content="Disconnect" Command="{Binding DisconnectCommand}" Margin="0,0,6,0" Padding="10,4"/>
+                    <Button Content="Enable drives" Command="{Binding EnableCommand}" Margin="0,0,6,0" Padding="10,4"/>
+                    <Button Content="Disable" Command="{Binding DisableCommand}" Margin="0,0,6,0" Padding="10,4"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0">
+                    <TextBlock Text="Speed" Foreground="#CCC" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                    <Slider Width="140" Minimum="0" Maximum="100"
+                            Value="{Binding SpeedPercent, Delay=200}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding SpeedPercent, StringFormat={}{0}%}" Foreground="#CCC"
+                               VerticalAlignment="Center" Margin="6,0,0,0" MinWidth="42"/>
+                </StackPanel>
+                <Button Grid.Column="3" Content="STOP (Esc)" Command="{Binding StopCommand}"
+                        Padding="14,8" Margin="12,0" FontWeight="Bold"/>
+                <Button Grid.Column="4" Content="E-STOP  F12" Command="{Binding EStopCommand}"
+                        Background="#C62F2F" Foreground="White" BorderBrush="#7A1D1D"
+                        Padding="18,10" FontWeight="Bold" FontSize="14"/>
+            </Grid>
+        </Border>
+
+        <!-- Fault banner -->
+        <Border DockPanel.Dock="Top" Background="#5A1111" Padding="10,6"
+                Visibility="{Binding HasFault, Converter={StaticResource BoolToVisibility}}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding FaultText}" Foreground="White" FontWeight="Bold"
+                           VerticalAlignment="Center" Margin="0,0,12,0" TextWrapping="Wrap"/>
+                <Button Content="Acknowledge fault" Command="{Binding AcknowledgeFaultCommand}"
+                        Padding="10,4" VerticalAlignment="Center"/>
+                <TextBlock Text="Re-home required before re-enabling" Foreground="#FBB"
+                           VerticalAlignment="Center" Margin="12,0,0,0"
+                           Visibility="{Binding RequiresRehomeNotice, Converter={StaticResource BoolToVisibility}}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Status line -->
+        <Border DockPanel.Dock="Bottom" Background="#111" Padding="10,4">
+            <TextBlock Text="{Binding StatusMessage}" Foreground="#99CCDD" FontFamily="Consolas"/>
+        </Border>
+
+        <!-- Axis cards + docked 3D view -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="420" MinWidth="320" MaxWidth="800"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Axes}" Margin="10">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <views:AxisCard Margin="0,0,10,10"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch" Background="#333"
+                          ResizeBehavior="PreviousAndNext"/>
+            <ContentControl x:Name="ArmHost" Grid.Column="2" Background="#1E1E1E"/>
+        </Grid>
+    </DockPanel>
 </Window>

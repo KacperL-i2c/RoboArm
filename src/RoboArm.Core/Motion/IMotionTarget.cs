@@ -1,3 +1,5 @@
+using RoboArm.Safety;
+
 namespace RoboArm.Motion;
 
 public enum StopSeverity
@@ -18,6 +20,11 @@ public sealed record AxisSetpoint(
     double VelocityDegS
 );
 
+/// <summary>
+/// The live motion target (board transport or simulator). Contract:
+/// async methods complete without holding internal locks, and events are never raised
+/// under an internal lock — the Runtime dispatches frames while holding its own lock.
+/// </summary>
 public interface IMotionTarget : IDisposable
 {
     event Action<TelemetryFrame>? TelemetryReceived;

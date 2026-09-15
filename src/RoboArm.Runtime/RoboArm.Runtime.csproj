@@ -2,5 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="..\RoboArm.Core\RoboArm.Core.csproj" />
     <ProjectReference Include="..\RoboArm.Protocol\RoboArm.Protocol.csproj" />
+    <ProjectReference Include="..\RoboArm.Simulator\RoboArm.Simulator.csproj" />
   </ItemGroup>
 </Project>

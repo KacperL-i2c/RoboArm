@@ -1,0 +1,61 @@
+{
+  "title": "RobotProgram",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "title": "programStep",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "movePose",
+              "moveJoints",
+              "moveAxis",
+              "jogHold",
+              "gripper",
+              "setOutput",
+              "waitInput",
+              "wait",
+              "loop",
+              "call",
+              "home",
+              "park",
+              "setSpeed"
+            ]
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "comment": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "parameters"
+        ]
+      }
+    },
+    "programVersion": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "steps",
+    "programVersion"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

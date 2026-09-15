@@ -1,0 +1,46 @@
+{
+  "title": "PoseLibrary",
+  "type": "object",
+  "properties": {
+    "poses": {
+      "type": "array",
+      "items": {
+        "title": "pose",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "jointPositionsDeg": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "gripperClosed": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
+          },
+          "capturedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "name",
+          "jointPositionsDeg"
+        ]
+      }
+    },
+    "version": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "poses",
+    "version"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
